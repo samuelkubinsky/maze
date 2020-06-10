@@ -3,7 +3,7 @@ package io.frinx.maze;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Hello world");
+        FindPathInputReaderFile file = new FindPathInputReaderFile("map1.txt");
     }
 
 }
