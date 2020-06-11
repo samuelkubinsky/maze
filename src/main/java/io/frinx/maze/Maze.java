@@ -77,10 +77,10 @@ public class Maze {
         for (int row = 0; row < rowCount; row++) {
             for (int column = 0; column < columnCount; column++) {
                 char current = maze[row][column];
-                if ((current == Node.START.getChar()) ||
-                    (current == Node.TARGET.getChar()) ||
-                    (current == Node.FREE.getChar()) ||
-                    (current == Node.BLOCKED.getChar())) {
+                if ((current != Node.START.getChar()) &&
+                    (current != Node.TARGET.getChar()) &&
+                    (current != Node.FREE.getChar()) &&
+                    (current != Node.BLOCKED.getChar())) {
                     return true;
                 }
             }

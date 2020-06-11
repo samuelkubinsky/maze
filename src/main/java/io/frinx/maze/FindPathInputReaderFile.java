@@ -17,8 +17,9 @@ public class FindPathInputReaderFile extends AbstractFindPathInputReader {
                     .toArray(char[][]::new);
 
             setMaze(new Maze(array));
+            findPath();
         } catch (IOException exception) {
-            System.out.println("Couldn't find file " + fileName);
+            System.out.println("Could not find file " + fileName);
         }
     }
 
