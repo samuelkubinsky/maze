@@ -11,12 +11,6 @@ public class StdInReader extends AbstractReader {
 
     public StdInReader() {
         getInput();
-
-        if (!isGridRectangle(strings)) {
-            System.out.println("Maze is not rectangular grid");
-            System.exit(2);
-        }
-
         processInput();
         setMaze(new Maze(array));
         findPath();
@@ -30,29 +24,13 @@ public class StdInReader extends AbstractReader {
         }
     }
 
-    private boolean isGridRectangle(LinkedList<String> list) {
-        int rowCount = list.size();
-        int rowLength = list.getFirst().length();
-
-        for (int row = 0; row < rowCount; row++) {
-            if (list.get(row).length() != rowLength) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     private void processInput() {
         int rowCount = strings.size();
-        int columnCount = strings.getFirst().length();
-        array = new char[rowCount][columnCount];
+        array = new char[rowCount][];
 
         for (int row = 0; row < rowCount; row++) {
             String line = strings.remove();
-            for (int column = 0; column < columnCount; column++) {
-                array[row][column] = line.charAt(column);
-            }
+            array[row] = line.toCharArray();
         }
     }
 

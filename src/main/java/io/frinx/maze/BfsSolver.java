@@ -7,7 +7,7 @@ import java.util.List;
 
 public class BfsSolver {
 
-    public Coordinate solve(Maze maze) {
+    public String solve(Maze maze) {
         LinkedList<Coordinate> toVisit = new LinkedList<>();
 
         Coordinate start = maze.getStart();
@@ -28,7 +28,9 @@ public class BfsSolver {
             }
 
             if (maze.ifNodeIs(Node.TARGET, row, column)) {
-                return current;
+                List<Coordinate> path = backtrackPath(current);
+                Collections.reverse(path);
+                return getSteps(path);
             }
 
             for (Direction direction: Direction.values()) {
@@ -40,12 +42,11 @@ public class BfsSolver {
             }
         }
 
-        return null;
+        return "There is no available path";
     }
 
     private List<Coordinate> backtrackPath(Coordinate target) {
         List<Coordinate> path = new ArrayList<>();
-
         Coordinate current = target;
 
         while (current != null) {
@@ -56,28 +57,29 @@ public class BfsSolver {
         return path;
     }
 
-    public void printSteps(Coordinate target) {
-        List<Coordinate> path = backtrackPath(target);
-        Collections.reverse(path);
+    public String getSteps(List<Coordinate> path) {
+        StringBuilder sb = new StringBuilder();
 
         for (int index = 0; index < path.size() - 1; index++) {
             Coordinate current = path.get(index);
             Coordinate next = path.get(index + 1);
 
             if (index != 0) {
-                System.out.print(",");
+                sb.append(",");
             }
 
             if (current.getRow() - 1 == next.getRow()) { // up
-                System.out.print("u");
+                sb.append("u");
             } else if (current.getColumn() + 1 == next.getColumn()) { // right
-                System.out.print("r");
+                sb.append("r");
             } else if (current.getRow() + 1 == next.getRow()) { // down
-                System.out.print("d");
+                sb.append("d");
             } else { // left
-                System.out.print("l");
+                sb.append("l");
             }
         }
+
+        return sb.toString();
     }
 
 }

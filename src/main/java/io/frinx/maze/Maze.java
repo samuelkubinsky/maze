@@ -2,26 +2,26 @@ package io.frinx.maze;
 
 public class Maze {
 
-    private final char[][] maze;
+    private final char[][] grid;
     private final int rowCount;
     private final int columnCount;
     private final boolean[][] visited;
     private final Coordinate start;
     private final Coordinate target;
 
-    public Maze(char[][] maze) {
-        this.maze = maze;
-        this.rowCount = maze.length;
-        this.columnCount = maze[0].length;
+    public Maze(char[][] grid) {
+        this.grid = grid;
+        this.rowCount = grid.length;
+        this.columnCount = grid[0].length;
         this.visited = new boolean[rowCount][columnCount];
         this.start = findCharInMaze(Node.START.getChar());
         this.target = findCharInMaze(Node.TARGET.getChar());
     }
 
     private Coordinate findCharInMaze(char character) {
-        for (int row = 0; row < rowCount; row++) {
-            for (int column = 0; column < columnCount; column++) {
-                if (maze[row][column] == character) {
+        for (int row = 0; row < grid.length; row++) {
+            for (int column = 0; column < grid[row].length; column++) {
+                if (grid[row][column] == character) {
                     return new Coordinate(row, column);
                 }
             }
@@ -41,9 +41,9 @@ public class Maze {
             case TARGET:
                 return (target.getRow() == row) && (target.getColumn() == column);
             case FREE:
-                return maze[row][column] == Node.FREE.getChar();
+                return grid[row][column] == Node.FREE.getChar();
             case BLOCKED:
-                return maze[row][column] == Node.BLOCKED.getChar();
+                return grid[row][column] == Node.BLOCKED.getChar();
             default:
                 return false;
         }
@@ -76,7 +76,7 @@ public class Maze {
     public boolean containsInvalidChars() {
         for (int row = 0; row < rowCount; row++) {
             for (int column = 0; column < columnCount; column++) {
-                char current = maze[row][column];
+                char current = grid[row][column];
                 if ((current != Node.START.getChar()) &&
                     (current != Node.TARGET.getChar()) &&
                     (current != Node.FREE.getChar()) &&
@@ -87,6 +87,39 @@ public class Maze {
         }
 
         return false;
+    }
+
+    public boolean containsMoreStartsOrTargets() {
+        int starts = 0;
+        int targets = 0;
+
+        for (int row = 0; row < rowCount; row++) {
+            for (int column = 0; column < columnCount; column++) {
+                char current = grid[row][column];
+
+                if (current == Node.START.getChar()) {
+                    starts++;
+                } else if (current == Node.TARGET.getChar()) {
+                    targets++;
+                }
+            }
+        }
+
+        if (starts > 1 || targets > 1) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean isGridRectangle() {
+        for (int row = 0; row < grid.length; row++) {
+            if (grid[row].length != grid[0].length) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 }
