@@ -10,14 +10,14 @@ public abstract class AbstractFindPathInputReader {
     private Maze maze;
 
     public void findPath() {
-        if (!maze.containsStartAndTarget()) {
-            System.out.println("Maze map does not contain START (S) or TARGET (X)");
-            return;
-        }
-
         if (maze.containsInvalidChars()) {
             System.out.println("Maze map contains invalid characters");
-            return;
+            System.exit(3);
+        }
+        
+        if (!maze.containsStartAndTarget()) {
+            System.out.println("Maze map does not contain START (S) or TARGET (X)");
+            System.exit(4);
         }
 
         solve();
@@ -34,17 +34,16 @@ public abstract class AbstractFindPathInputReader {
 
             int row = current.getRow();
             int column = current.getColumn();
-            System.out.println(row + " " + column);
 
             if (!maze.isLocationValid(row, column) || maze.isVisited(row, column)) {
                 continue;
             }
 
-            if (maze.isNode(Node.BLOCKED, row, column)) {
+            if (maze.ifNodeIs(Node.BLOCKED, row, column)) {
                 continue;
             }
 
-            if (maze.isNode(Node.TARGET, row, column)) {
+            if (maze.ifNodeIs(Node.TARGET, row, column)) {
                 printSteps(current);
                 return;
             }
@@ -57,6 +56,8 @@ public abstract class AbstractFindPathInputReader {
                 maze.setAsVisited(row, column);
             }
         }
+
+        System.out.println("There is no available path");
     }
 
     private List<Coordinate> backtrackPath(Coordinate target) {

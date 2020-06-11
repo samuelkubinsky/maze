@@ -34,7 +34,7 @@ public class Maze {
         return start;
     }
 
-    public boolean isNode(Node node, int row, int column) {
+    public boolean ifNodeIs(Node node, int row, int column) {
         switch (node) {
             case START:
                 return (start.getRow() == row) && (start.getColumn() == column);
