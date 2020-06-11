@@ -5,25 +5,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class AbstractFindPathInputReader {
+public class BfsSolver {
 
-    private Maze maze;
-
-    public void findPath() {
-        if (maze.containsInvalidChars()) {
-            System.out.println("Maze map contains invalid characters");
-            System.exit(3);
-        }
-        
-        if (!maze.containsStartAndTarget()) {
-            System.out.println("Maze map does not contain START (S) or TARGET (X)");
-            System.exit(4);
-        }
-
-        solve();
-    }
-
-    public void solve() {
+    public Coordinate solve(Maze maze) {
         LinkedList<Coordinate> toVisit = new LinkedList<>();
 
         Coordinate start = maze.getStart();
@@ -44,8 +28,7 @@ public abstract class AbstractFindPathInputReader {
             }
 
             if (maze.ifNodeIs(Node.TARGET, row, column)) {
-                printSteps(current);
-                return;
+                return current;
             }
 
             for (Direction direction: Direction.values()) {
@@ -57,7 +40,7 @@ public abstract class AbstractFindPathInputReader {
             }
         }
 
-        System.out.println("There is no available path");
+        return null;
     }
 
     private List<Coordinate> backtrackPath(Coordinate target) {
@@ -95,10 +78,6 @@ public abstract class AbstractFindPathInputReader {
                 System.out.print("l");
             }
         }
-    }
-
-    public void setMaze(Maze maze) {
-        this.maze = maze;
     }
 
 }

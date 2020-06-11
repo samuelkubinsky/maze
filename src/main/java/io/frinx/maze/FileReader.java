@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class FindPathInputReaderFile extends AbstractFindPathInputReader {
+public class FileReader extends AbstractReader {
 
-    public FindPathInputReaderFile(String fileName) {
+    public FileReader(String fileName) {
         try {
             File file = new File(fileName);
             Path path = file.toPath();
@@ -16,7 +16,7 @@ public class FindPathInputReaderFile extends AbstractFindPathInputReader {
                     .map(String::toCharArray)
                     .toArray(char[][]::new);
 
-            if (!isRectangularGrid(array)) {
+            if (!isGridRectangle(array)) {
                 System.out.println("Maze is not rectangular grid");
                 System.exit(2);
             }
@@ -24,12 +24,12 @@ public class FindPathInputReaderFile extends AbstractFindPathInputReader {
             setMaze(new Maze(array));
             findPath();
         } catch (IOException exception) {
-            System.out.println("Could not find file " + fileName);
+            System.out.println("Map file with name '" + fileName + "' was not found");
             System.exit(1);
         }
     }
 
-    private boolean isRectangularGrid(char[][] array) {
+    private boolean isGridRectangle(char[][] array) {
         int rowCount = array.length;
         int rowLength = array[0].length;
 

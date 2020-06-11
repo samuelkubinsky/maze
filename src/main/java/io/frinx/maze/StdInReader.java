@@ -3,16 +3,16 @@ package io.frinx.maze;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-public class FindPathInputReaderStdIn extends AbstractFindPathInputReader {
+public class StdInReader extends AbstractReader {
 
     private final Scanner scanner = new Scanner(System.in);
     private final LinkedList<String> strings = new LinkedList<>();
     private char[][] array;
 
-    public FindPathInputReaderStdIn() {
+    public StdInReader() {
         getInput();
 
-        if (!isRectangularGrid(strings)) {
+        if (!isGridRectangle(strings)) {
             System.out.println("Maze is not rectangular grid");
             System.exit(2);
         }
@@ -30,7 +30,7 @@ public class FindPathInputReaderStdIn extends AbstractFindPathInputReader {
         }
     }
 
-    private boolean isRectangularGrid(LinkedList<String> list) {
+    private boolean isGridRectangle(LinkedList<String> list) {
         int rowCount = list.size();
         int rowLength = list.getFirst().length();
 
